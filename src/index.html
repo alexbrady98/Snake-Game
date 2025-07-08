@@ -2,30 +2,42 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Snake App</title>
+        <title>Snake Game</title>
         <link rel="stylesheet" href="style.css" />
     </head>
     <body>
-      <header>
-        <h1>Welcome To Snake!</h1>
-        <p>Welcome to Snake - press WASD or the corresponding buttons to move Slippy the Snake</p>
-      </header>
+        <header>
+            <h1>Welcome To Snake!</h1>
+            <p>
+                Welcome to Snake - press WASD or the corresponding buttons to
+                move Slippy the Snake
+            </p>
+        </header>
 
         <div class="main--container">
-         
-          <div class="main--container__stage"></div>
+            <div class="main--container__stage">
+                <div class="main--container__stage-snake"></div>
+                <div class="main--container__stage-food"></div>
+            </div>
 
-          <div class ="main--container__score">
-            <div>Score:<span> 1</span></div>
-            <div>Level:<span> 1</span></div>
-          </div>
-        
+            <div class="main--container__score">
+                <div class="main--container__score-label">
+                    Score: <span>1</span>
+                </div>
+
+                <div class="main--container__controls">
+                    <button class="btn btn--up">↑</button>
+                    <div class="horizontal">
+                        <button class="btn btn--left">←</button>
+                        <button class="btn btn--right">→</button>
+                    </div>
+                    <button class="btn btn--down">↓</button>
+                </div>
+
+                <div class="main--container__score-label">
+                    Level: <span>1</span>
+                </div>
+            </div>
         </div>
-
-        
-      
-        <script type="module" src="main.ts"></script>
     </body>
 </html>
