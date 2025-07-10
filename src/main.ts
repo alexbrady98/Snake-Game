@@ -31,7 +31,9 @@ const scoreElement = document.querySelector<HTMLDivElement>(
 // Handle user input either usinng an if statement or a switch
 // e.key handles the keyboard event
 
-document.addEventListener("keydown", (e) => {
+
+// This function will update the game state
+document.addEventListener("keypress", (e) => {
     switch (e.key) {
         case "w":
             direction = { x: 0, y: -1 };
@@ -63,6 +65,23 @@ document
 document
     .querySelector(".btn--right")
     ?.addEventListener("click", () => (direction = { x: 1, y: 0 }));
+
+
+
+// Drawing and moving the snake around the grid
+function moveSnake() {
+    const head = {...snake[0] };
+    // clone the head of the snake with a curly braces because I want to create a new object - not mutating the original - we want to kee original snake
+    head.x += direction.x;
+    // adds the firection to the head of the snake 
+    head.y += direction.y;
+    snake.unshift(head);
+    // adding the new head to the front of the snake array 
+    snake.pop();
+    // while pop removes teh last element from the snake array simiulating the snake moving forward
+}
+
+
 
 // Detect collision with food and increase the score
 
