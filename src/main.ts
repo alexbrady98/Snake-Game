@@ -19,8 +19,8 @@ const snakeElement = document.querySelector<HTMLDivElement>(
 const foodElement = document.querySelector<HTMLDivElement>(
     ".main--container__stage-food"
 ) as HTMLDivElement;
-const scoreElement = document.querySelector<HTMLDivElement>(
-    ".main-container__score-label span"
+const scoreElement = document.querySelector<HTMLSpanElement>(
+    ".main--container__score-label span"
 ) as HTMLSpanElement;
 
 // I will need to create an event listener that handles the wasd keys and then map then to the buttons in put as well
@@ -30,7 +30,6 @@ const scoreElement = document.querySelector<HTMLDivElement>(
 
 // Handle user input either usinng an if statement or a switch
 // e.key handles the keyboard event
-
 
 // This function will update the game state
 document.addEventListener("keypress", (e) => {
@@ -51,7 +50,7 @@ document.addEventListener("keypress", (e) => {
 });
 
 // Query Selector for the buttons. Doing a very similar thing to the WASD just instead using event listener rather than a switch.
-// 
+//
 
 document
     .querySelector(".btn--up")
@@ -66,22 +65,31 @@ document
     .querySelector(".btn--right")
     ?.addEventListener("click", () => (direction = { x: 1, y: 0 }));
 
-
-
-// Drawing and moving the snake around the grid
+// Drawing and moving the snake around the grid - this took some brain power
 function moveSnake() {
-    const head = {...snake[0] };
+    const head = { ...snake[0] };
     // clone the head of the snake with a curly braces because I want to create a new object - not mutating the original - we want to kee original snake
     head.x += direction.x;
-    // adds the firection to the head of the snake 
+    // adds the firection to the head of the snake
     head.y += direction.y;
     snake.unshift(head);
-    // adding the new head to the front of the snake array 
+    // adding the new head to the front of the snake array
     snake.pop();
     // while pop removes teh last element from the snake array simiulating the snake moving forward
 }
 
+// Setting a temporary game loop- check
 
+function drawSnake() {
+    console.log("Snake position:", snake[0]);
+    snakeElement.style.left = `${snake[0].x * 10}px`;
+    snakeElement.style.top = `${snake[0].y * 10}px`;
+}
+
+setInterval(() => {
+    moveSnake();
+    drawSnake();
+}, 200); // snake moves every 200ms
 
 // Detect collision with food and increase the score
 
