@@ -81,15 +81,38 @@ function moveSnake() {
 // Setting a temporary game loop- check
 
 function drawSnake() {
-    console.log("Snake position:", snake[0]);
     snakeElement.style.left = `${snake[0].x * 10}px`;
+    // Snake [0] is the snake head - first bit of the array "Snake"
+    // // were moving the snake ten pixels when you press l or right  
     snakeElement.style.top = `${snake[0].y * 10}px`;
+    /// Similarly the y works the same 
+}
+
+function drawFood() {
+    // x and y gives the coordinates of the food
+    foodElElement.style.left = `${food.x * 10}px`;
+    foodElement.style.top = `${food.y * 10}px`;
 }
 
 setInterval(() => {
     moveSnake();
     drawSnake();
-}, 200); // snake moves every 200ms
+}, 400);
+
+
+/// Adding food collision 
+function checkFoodCollision() {
+    const head = snake[0];
+    if (head.x === food.x && head.y === food.y) {
+        // Simple if statement tracking the overlap of food and head element 
+        score++; // score is iterated upwards 
+        updateScore();
+        growSnake();
+        randomiseFood();
+    }
+}
+
+
 
 // Detect collision with food and increase the score
 
