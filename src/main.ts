@@ -83,41 +83,55 @@ function moveSnake() {
 function drawSnake() {
     snakeElement.style.left = `${snake[0].x * 10}px`;
     // Snake [0] is the snake head - first bit of the array "Snake"
-    // // were moving the snake ten pixels when you press l or right  
+    // // were moving the snake ten pixels when you press l or right
     snakeElement.style.top = `${snake[0].y * 10}px`;
-    /// Similarly the y works the same 
+    /// Similarly the y works the same
 }
 
 function drawFood() {
     // x and y gives the coordinates of the food
-    foodElElement.style.left = `${food.x * 10}px`;
+    foodElement.style.left = `${food.x * 10}px`;
     foodElement.style.top = `${food.y * 10}px`;
 }
 
-setInterval(() => {
-    moveSnake();
-    drawSnake();
-}, 400);
-
-
-/// Adding food collision 
+/// Adding food collision
 function checkFoodCollision() {
     const head = snake[0];
     if (head.x === food.x && head.y === food.y) {
-        // Simple if statement tracking the overlap of food and head element 
-        score++; // score is iterated upwards 
+        // Simple if statement tracking the overlap of food and head element
+        score++; // score is iterated upwards
         updateScore();
         growSnake();
         randomiseFood();
     }
 }
 
+// Now I need to randomise the food after its eaten and add a new segment to the snake array
+// Math.ceil? and Maath floor.
+// Math Ceil is randomising a decimal bewtween 0 - 1 * by width& height then round it down to a full number
+
+function randomiseFood() {
+    const gridWidth = 30;
+    const gridHeight = 35; 
+
+    food = {
+        x: Math.floor(Math.random() * gridWidth),
+        y: Math.floor(Math.random() * gridHeight),
+    };
+    return drawFood(); // redrawing the food using styles mentioned earlier in the code 
+}
 
 
-// Detect collision with food and increase the score
+// Update the score screen afterwards
+function updateScore() {
+    scoreElement.textContent = score.toString();
+}
 
-// Randomise food after collision
-
-// Add collision with walls
+// Add collision with walls and the snake array
 
 // Add a game over state and reset the game
+setInterval(() => {
+    moveSnake();
+    checkFoodCollision();
+    drawSnake();
+}, 400);
