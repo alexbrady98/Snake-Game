@@ -5,10 +5,10 @@ import "./style.css";
 type Position = { x: number; y: number };
 
 let snake: Position[] = [{ x: 10, y: 10 }];
-let food: Position = { x: 5, y: 5 };
+let food: Position; // Need to change the starting position of food so that it should be randomised rather than defined here constantly
 let direction: Position = { x: 0, y: 0 };
 let score: number = 0;
-let started = false;   // add a started function so that the game the game doesn't trigger a game over state immediately 
+let started = false; // add a started function so that the game the game doesn't trigger a game over state immediately
 
 // Grabbing each element with a query selector
 const stageElement = document.querySelector<HTMLDivElement>(
@@ -24,6 +24,9 @@ const scoreElement = document.querySelector<HTMLSpanElement>(
     ".main--container__score-label span"
 ) as HTMLSpanElement;
 
+// Initialise the food at a random location once the DOM is ready
+randomiseFood();
+
 // I will need to create an event listener that handles the wasd keys and then map then to the buttons in put as well
 // Alternatively I could just use the same direction event listener for the button i.e. -y -1 x 0 etc
 
@@ -33,29 +36,6 @@ const scoreElement = document.querySelector<HTMLSpanElement>(
 // e.key handles the keyboard event
 
 // This function will update the game state
-document.addEventListener("keydown", (e) => {
-    if (!started) started = true; 
-    switch (e.key) {
-        case "w":
-            direction = { x: 0, y: -1 };
-            break;
-        case "s":
-            direction = { x: 0, y: 1 };
-            break;
-        case "a":
-            direction = { x: -1, y: 0 };
-            break;
-        case "d":
-            direction = { x: 1, y: 0 };
-            break;
-    }
-});
-
-// have to use "keydown" not key press apparently 
-
-// Query Selector for the buttons. Doing a very similar thing to the WASD just instead using event listener rather than a switch.
-//
-
 document.addEventListener("keydown", (e) => {
     if (!started) started = true;
     switch (e.key) {
@@ -73,6 +53,10 @@ document.addEventListener("keydown", (e) => {
             break;
     }
 });
+
+// have to use "keydown" not key press apparently
+
+// Query Selector for the buttons. Doing a very similar thing to the WASD just instead using event listener rather than a switch.
 
 document.querySelector(".btn--up")?.addEventListener("click", () => {
     direction = { x: 0, y: -1 };
@@ -104,8 +88,6 @@ function moveSnake() {
     // while pop removes teh last element from the snake array simiulating the snake moving forward
 }
 
-// Setting a temporary game loop- check
-
 function drawSnake() {
     snakeElement.style.left = `${snake[0].x * 10}px`;
     // Snake [0] is the snake head - first bit of the array "Snake"
@@ -126,13 +108,20 @@ function checkFoodCollision() {
     if (head.x === food.x && head.y === food.y) {
         // Simple if statement tracking the overlap of food and head element
         score++; // score is iterated upwards
-        updateScore(); // tick 
-        growSnake();
-        randomiseFood();
+        updateScore(); // tick
+        growSnake(); // tick
+        randomiseFood(); //tick
     }
 }
 
+// Grow snake function
+// Not sure Why I left this so late to do its causing confusion in my code - need to be more methodical here
 
+function growSnake() {
+    const tail = snake[snake.length - 1]; // finding the index of the tail
+    const newSegment = { ...tail }; // copying the tail
+    snake.push(newSegment); // adding the new segment to the tail
+}
 
 // Now I need to randomise the food after its eaten and add a new segment to the snake array
 // Math.ceil? and Maath floor.
@@ -146,7 +135,7 @@ function randomiseFood() {
         x: Math.floor(Math.random() * gridWidth),
         y: Math.floor(Math.random() * gridHeight),
     };
-    return drawFood(); // redrawing the food using styles mentioned earlier in the code
+    return drawFood();
 }
 
 // Update the score screen afterwards
@@ -162,28 +151,41 @@ function checkWallCollision() {
     const gridHeight = 35;
 
     if (
-        head.x < 0 || head.x >= gridWidth ||
-        head.y < 0 || head.y >= gridHeight
+        head.x < 0 ||
+        head.x >= gridWidth ||
+        head.y < 0 ||
+        head.y >= gridHeight
     ) {
         gameOver();
     }
 }
 
-// GameOver state  ----- causing a game over straight away because my snake was hitting its tail straight away 
+// GameOver state  ----- causing a game over straight away because my snake was hitting its tail straight away
 function gameOver() {
     alert("Game Over! Your score was " + score);
-    location.reload(); // Resetting the location of food and the snake 
+    location.reload(); // Resetting the location of food and the snake
 }
-
-
 
 // Add a game over state and reset the game
 setInterval(() => {
     if (!started) return;
 
     moveSnake();
-    checkWallCollision()
+    checkWallCollision();
     checkFoodCollision();
+    drawFood();
     drawSnake();
-    gameOver();
 }, 400);
+
+// removing game over from every loop - why i ran into a persistent issue
+
+// Issues
+// Snake element - remains outside the stage after I fail so constant fail thereafter
+// Food randomises indefinitely and when i use draw food in the loop it does not randomise when collided with
+// Snake can go outside of the stage
+
+// To do after fixing bugs
+// add self collision with longer snake body
+// add a game over screen
+//
+// Optional - add harder levels if I have time
