@@ -1,4 +1,4 @@
-import "style.css";
+import "./style.css";
 
 // Firstly I should set up a grid system that will allow tracking off the snake and the food item
 // Define the initial state of each item and the direction
@@ -8,6 +8,7 @@ let snake: Position[] = [{ x: 10, y: 10 }];
 let food: Position = { x: 5, y: 5 };
 let direction: Position = { x: 0, y: 0 };
 let score: number = 0;
+let started = false;   // add a started function so that the game the game doesn't trigger a game over state immediately 
 
 // Grabbing each element with a query selector
 const stageElement = document.querySelector<HTMLDivElement>(
@@ -33,6 +34,7 @@ const scoreElement = document.querySelector<HTMLSpanElement>(
 
 // This function will update the game state
 document.addEventListener("keydown", (e) => {
+    if (!started) started = true; 
     switch (e.key) {
         case "w":
             direction = { x: 0, y: -1 };
@@ -54,18 +56,40 @@ document.addEventListener("keydown", (e) => {
 // Query Selector for the buttons. Doing a very similar thing to the WASD just instead using event listener rather than a switch.
 //
 
-document
-    .querySelector(".btn--up")
-    ?.addEventListener("click", () => (direction = { x: 0, y: -1 }));
-document
-    .querySelector(".btn--down")
-    ?.addEventListener("click", () => (direction = { x: 0, y: 1 }));
-document
-    .querySelector(".btn--left")
-    ?.addEventListener("click", () => (direction = { x: -1, y: 0 }));
-document
-    .querySelector(".btn--right")
-    ?.addEventListener("click", () => (direction = { x: 1, y: 0 }));
+document.addEventListener("keydown", (e) => {
+    if (!started) started = true;
+    switch (e.key) {
+        case "w":
+            direction = { x: 0, y: -1 };
+            break;
+        case "s":
+            direction = { x: 0, y: 1 };
+            break;
+        case "a":
+            direction = { x: -1, y: 0 };
+            break;
+        case "d":
+            direction = { x: 1, y: 0 };
+            break;
+    }
+});
+
+document.querySelector(".btn--up")?.addEventListener("click", () => {
+    direction = { x: 0, y: -1 };
+    started = true;
+});
+document.querySelector(".btn--down")?.addEventListener("click", () => {
+    direction = { x: 0, y: 1 };
+    started = true;
+});
+document.querySelector(".btn--left")?.addEventListener("click", () => {
+    direction = { x: -1, y: 0 };
+    started = true;
+});
+document.querySelector(".btn--right")?.addEventListener("click", () => {
+    direction = { x: 1, y: 0 };
+    started = true;
+});
 
 // Drawing and moving the snake around the grid - this took some brain power
 function moveSnake() {
@@ -102,11 +126,13 @@ function checkFoodCollision() {
     if (head.x === food.x && head.y === food.y) {
         // Simple if statement tracking the overlap of food and head element
         score++; // score is iterated upwards
-        updateScore();
+        updateScore(); // tick 
         growSnake();
         randomiseFood();
     }
 }
+
+
 
 // Now I need to randomise the food after its eaten and add a new segment to the snake array
 // Math.ceil? and Maath floor.
@@ -143,10 +169,18 @@ function checkWallCollision() {
     }
 }
 
+// GameOver state  ----- causing a game over straight away because my snake was hitting its tail straight away 
+function gameOver() {
+    alert("Game Over! Your score was " + score);
+    location.reload(); // Resetting the location of food and the snake 
+}
+
 
 
 // Add a game over state and reset the game
 setInterval(() => {
+    if (!started) return;
+
     moveSnake();
     checkWallCollision()
     checkFoodCollision();
