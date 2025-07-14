@@ -1,4 +1,4 @@
-import "./style.css";
+import "style.css";
 
 // Firstly I should set up a grid system that will allow tracking off the snake and the food item
 // Define the initial state of each item and the direction
@@ -32,7 +32,7 @@ const scoreElement = document.querySelector<HTMLSpanElement>(
 // e.key handles the keyboard event
 
 // This function will update the game state
-document.addEventListener("keypress", (e) => {
+document.addEventListener("keydown", (e) => {
     switch (e.key) {
         case "w":
             direction = { x: 0, y: -1 };
@@ -48,7 +48,8 @@ document.addEventListener("keypress", (e) => {
             break;
     }
 });
-// This isn't working but the buttons are working 
+
+// have to use "keydown" not key press apparently 
 
 // Query Selector for the buttons. Doing a very similar thing to the WASD just instead using event listener rather than a switch.
 //
@@ -101,9 +102,9 @@ function checkFoodCollision() {
     if (head.x === food.x && head.y === food.y) {
         // Simple if statement tracking the overlap of food and head element
         score++; // score is iterated upwards
-        updateScore(); // tick 
+        updateScore();
         growSnake();
-        randomiseFood(); // tick 
+        randomiseFood();
     }
 }
 
@@ -135,25 +136,20 @@ function checkWallCollision() {
     const gridHeight = 35;
 
     if (
-        head.x < 0 ||
-        head.x >= gridWidth ||
-        head.y < 0 ||
-        head.y >= gridHeight
+        head.x < 0 || head.x >= gridWidth ||
+        head.y < 0 || head.y >= gridHeight
     ) {
-// gameOver(); - need to create the gameover function 
+        gameOver();
     }
 }
-
-// Add a function checking self collision 
 
 
 
 // Add a game over state and reset the game
-
-// Game loop below 
 setInterval(() => {
     moveSnake();
+    checkWallCollision()
     checkFoodCollision();
     drawSnake();
-    checkWallCollision()
+    gameOver();
 }, 400);
