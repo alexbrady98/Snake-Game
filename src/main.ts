@@ -112,15 +112,14 @@ function checkFoodCollision() {
 
 function randomiseFood() {
     const gridWidth = 30;
-    const gridHeight = 35; 
+    const gridHeight = 35;
 
     food = {
         x: Math.floor(Math.random() * gridWidth),
         y: Math.floor(Math.random() * gridHeight),
     };
-    return drawFood(); // redrawing the food using styles mentioned earlier in the code 
+    return drawFood(); // redrawing the food using styles mentioned earlier in the code
 }
-
 
 // Update the score screen afterwards
 function updateScore() {
@@ -128,6 +127,22 @@ function updateScore() {
 }
 
 // Add collision with walls and the snake array
+
+function checkWallCollision() {
+    const head = snake[0];
+    const gridWidth = 30;
+    const gridHeight = 35;
+
+    if (
+        head.x < 0 ||
+        head.x >= gridWidth ||
+        head.y < 0 ||
+        head.y >= gridHeight
+    ) {
+// gameOver(); - need to create the gameover function 
+    }
+}
+
 
 // Add a game over state and reset the game
 setInterval(() => {
