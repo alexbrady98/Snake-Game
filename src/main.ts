@@ -48,6 +48,7 @@ document.addEventListener("keypress", (e) => {
             break;
     }
 });
+// This isn't working but the buttons are working 
 
 // Query Selector for the buttons. Doing a very similar thing to the WASD just instead using event listener rather than a switch.
 //
@@ -100,9 +101,9 @@ function checkFoodCollision() {
     if (head.x === food.x && head.y === food.y) {
         // Simple if statement tracking the overlap of food and head element
         score++; // score is iterated upwards
-        updateScore();
+        updateScore(); // tick 
         growSnake();
-        randomiseFood();
+        randomiseFood(); // tick 
     }
 }
 
@@ -143,10 +144,16 @@ function checkWallCollision() {
     }
 }
 
+// Add a function checking self collision 
+
+
 
 // Add a game over state and reset the game
+
+// Game loop below 
 setInterval(() => {
     moveSnake();
     checkFoodCollision();
     drawSnake();
+    checkWallCollision()
 }, 400);
