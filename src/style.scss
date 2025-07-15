@@ -51,17 +51,7 @@ header {
         border-radius: 5px;
         background-color: $background-color;
         position: relative;
-
-        &-snake {
-            width: 10px;
-            height: 10px;
-            background-color: rgb(184, 25, 25);
-            position: absolute;
-            top: 100px;
-            left: 100px;
-            border: 1px solid red;
-            border-radius: 15px;
-        }
+        overflow: hidden; // added in ask snake was going down to score section 
 
         &-food {
             width: 10px;
@@ -89,6 +79,15 @@ header {
                 margin-left: 5px;
             }
         }
+    }
+
+    .snake-segment {
+        width: 10px;
+        height: 10px;
+        background-color: rgb(184, 25, 25);
+        position: absolute;
+        border: 1px solid red;
+        border-radius: 15px;
     }
 
     .main--container__controls {

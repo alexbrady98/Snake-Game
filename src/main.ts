@@ -14,9 +14,6 @@ let started = false; // add a started function so that the game the game doesn't
 const stageElement = document.querySelector<HTMLDivElement>(
     ".main--container__stage"
 ) as HTMLDivElement;
-const snakeElement = document.querySelector<HTMLDivElement>(
-    ".main--container__stage-snake"
-) as HTMLDivElement;
 const foodElement = document.querySelector<HTMLDivElement>(
     ".main--container__stage-food"
 ) as HTMLDivElement;
@@ -30,12 +27,8 @@ randomiseFood();
 // I will need to create an event listener that handles the wasd keys and then map then to the buttons in put as well
 // Alternatively I could just use the same direction event listener for the button i.e. -y -1 x 0 etc
 
-// What else do I need to do?
-
 // Handle user input either usinng an if statement or a switch
 // e.key handles the keyboard event
-
-// This function will update the game state
 document.addEventListener("keydown", (e) => {
     if (!started) started = true;
     switch (e.key) {
@@ -57,7 +50,6 @@ document.addEventListener("keydown", (e) => {
 // have to use "keydown" not key press apparently
 
 // Query Selector for the buttons. Doing a very similar thing to the WASD just instead using event listener rather than a switch.
-
 document.querySelector(".btn--up")?.addEventListener("click", () => {
     direction = { x: 0, y: -1 };
     started = true;
@@ -78,22 +70,31 @@ document.querySelector(".btn--right")?.addEventListener("click", () => {
 // Drawing and moving the snake around the grid - this took some brain power
 function moveSnake() {
     const head = { ...snake[0] };
-    // clone the head of the snake with a curly braces because I want to create a new object - not mutating the original - we want to kee original snake
+    // clone the head of the snake with a curly braces because I want to create a new object - not mutating the original - we want to keep original snake
     head.x += direction.x;
-    // adds the firection to the head of the snake
+    // adds the direction to the head of the snake
     head.y += direction.y;
     snake.unshift(head);
     // adding the new head to the front of the snake array
-    snake.pop();
-    // while pop removes teh last element from the snake array simiulating the snake moving forward
+    return head;
+    // return the new head so we can decide whether to pop the tail later
 }
 
+// Fixed draw snake function without pop and push as it was causeing issues in the loop 
 function drawSnake() {
-    snakeElement.style.left = `${snake[0].x * 10}px`;
-    // Snake [0] is the snake head - first bit of the array "Snake"
-    // // were moving the snake ten pixels when you press l or right
-    snakeElement.style.top = `${snake[0].y * 10}px`;
-    /// Similarly the y works the same
+    // First, remove any previously drawn snake segments
+    document.querySelectorAll(".snake-segment").forEach((seg) => seg.remove());
+
+    // Then loop through the snake array and draw each part 
+
+    
+    snake.forEach((segment) => {
+        const segmentEl = document.createElement("div");
+        segmentEl.classList.add("snake-segment");
+        segmentEl.style.left = `${segment.x * 10}px`;
+        segmentEl.style.top = `${segment.y * 10}px`;
+        stageElement.appendChild(segmentEl);
+    });
 }
 
 function drawFood() {
@@ -103,30 +104,13 @@ function drawFood() {
 }
 
 /// Adding food collision
-function checkFoodCollision() {
-    const head = snake[0];
-    if (head.x === food.x && head.y === food.y) {
-        // Simple if statement tracking the overlap of food and head element
-        score++; // score is iterated upwards
-        updateScore(); // tick
-        growSnake(); // tick
-        randomiseFood(); //tick
-    }
-}
-
-// Grow snake function
-// Not sure Why I left this so late to do its causing confusion in my code - need to be more methodical here
-
-function growSnake() {
-    const tail = snake[snake.length - 1]; // finding the index of the tail
-    const newSegment = { ...tail }; // copying the tail
-    snake.push(newSegment); // adding the new segment to the tail
+function checkFoodCollision(newHead: Position): boolean {
+    return newHead.x === food.x && newHead.y === food.y;
 }
 
 // Now I need to randomise the food after its eaten and add a new segment to the snake array
-// Math.ceil? and Maath floor.
-// Math Ceil is randomising a decimal bewtween 0 - 1 * by width& height then round it down to a full number
-
+// Math.ceil? and Math.floor.
+// Math.floor is randomising a decimal between 0 - 1 * by width & height then round it down to a full number
 function randomiseFood() {
     const gridWidth = 30;
     const gridHeight = 35;
@@ -135,7 +119,7 @@ function randomiseFood() {
         x: Math.floor(Math.random() * gridWidth),
         y: Math.floor(Math.random() * gridHeight),
     };
-    return drawFood();
+    drawFood();
 }
 
 // Update the score screen afterwards
@@ -144,7 +128,6 @@ function updateScore() {
 }
 
 // Add collision with walls and the snake array
-
 function checkWallCollision() {
     const head = snake[0];
     const gridWidth = 30;
@@ -163,26 +146,56 @@ function checkWallCollision() {
 // GameOver state  ----- causing a game over straight away because my snake was hitting its tail straight away
 function gameOver() {
     alert("Game Over! Your score was " + score);
+    clearInterval(gameLoop);
     location.reload(); // Resetting the location of food and the snake
 }
 
 // Add a game over state and reset the game
-setInterval(() => {
+const gameLoop = setInterval(() => {
     if (!started) return;
+    // Only run the game loop if the game has started
 
-    moveSnake();
+    const newHead = moveSnake();
+    // Move the snake by adding a new head in the direction of movement
+
     checkWallCollision();
-    checkFoodCollision();
-    drawFood();
-    drawSnake();
-}, 400);
+    // Check if the snake has collided with the wall boundaries
 
-// removing game over from every loop - why i ran into a persistent issue
+    const ateFood = checkFoodCollision(newHead);
+    // Check if the new head position overlaps with the food position
+
+    if (ateFood) {
+        score++;
+        // If the snake eats the food, increase the score
+
+        updateScore();
+        // Update the score display on the page
+
+        randomiseFood();
+        // Move the food to a new random location
+
+        // We don’t call snake.pop() here, which causes the snake to grow
+    } else {
+        snake.pop();
+        // If food was not eaten, remove the tail segment
+        // This keeps the snake the same length while appearing to move
+    }
+
+    drawFood();
+    // Update the food's position visually
+
+    drawSnake();
+    // Update the snake's position visually
+}, 100);
+
+
 
 // Issues
 // Snake element - remains outside the stage after I fail so constant fail thereafter
-// Food randomises indefinitely and when i use draw food in the loop it does not randomise when collided with
+// Food randomises indefinitely and when i use draw food in the loop it does not randomise when collided with // fixed
 // Snake can go outside of the stage
+// Snake is shifting and popping regardless of wether the snake ate food or not - need to fix in the interval function// fixed
+//^ above is now causing multiple gameovers making it difficult to restart // Fixed declaring the loop in a variable and putting it in gameOver function 
 
 // To do after fixing bugs
 // add self collision with longer snake body
