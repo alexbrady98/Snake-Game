@@ -51,7 +51,7 @@ header {
         border-radius: 5px;
         background-color: $background-color;
         position: relative;
-        overflow: hidden; // added in ask snake was going down to score section 
+        overflow: hidden; // Overflow added which means the snake can't go into the score box 
 
         &-food {
             width: 10px;
