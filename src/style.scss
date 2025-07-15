@@ -40,6 +40,7 @@ header {
     border: 5px solid #000;
     border-radius: 15px;
     display: flex;
+    box-sizing: border-box;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
@@ -51,9 +52,9 @@ header {
         border-radius: 5px;
         background-color: $background-color;
         position: relative;
-        overflow: hidden; // Overflow added which means the snake can't go into the score box 
+        overflow: hidden;
 
-        &-food {
+        .main--container__stage-food {
             width: 10px;
             height: 10px;
             background-color: green;

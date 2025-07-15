@@ -36,6 +36,7 @@ header p {
   border: 5px solid #000;
   border-radius: 15px;
   display: flex;
+  box-sizing: border-box;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
@@ -47,9 +48,9 @@ header p {
   border-radius: 5px;
   background-color: #4455b6;
   position: relative;
- 
+  overflow: hidden;
 }
-.main--container__stage-food {
+.main--container__stage .main--container__stage-food {
   width: 10px;
   height: 10px;
   background-color: green;

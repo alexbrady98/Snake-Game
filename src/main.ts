@@ -80,19 +80,23 @@ function moveSnake() {
     // return the new head so we can decide whether to pop the tail later
 }
 
-// Fixed draw snake function without pop and push as it was causeing issues in the loop 
+// Fixed draw snake function without pop and push as it was causeing issues in the loop
 function drawSnake() {
     // First, remove any previously drawn snake segments
     document.querySelectorAll(".snake-segment").forEach((seg) => seg.remove());
 
-    // Then loop through the snake array and draw each part 
+    // Removes previous segments that were in this class - "moving the snake"
 
-    
+    // Then loop through the snake array and draw each part
+
     snake.forEach((segment) => {
         const segmentEl = document.createElement("div");
+        // After removing previous element i'm adding a new element to snake segment
         segmentEl.classList.add("snake-segment");
+        // Below is where its getting moved
         segmentEl.style.left = `${segment.x * 10}px`;
         segmentEl.style.top = `${segment.y * 10}px`;
+        // Adding the div to the stage making it actually appear
         stageElement.appendChild(segmentEl);
     });
 }
@@ -188,14 +192,12 @@ const gameLoop = setInterval(() => {
     // Update the snake's position visually
 }, 100);
 
-
-
 // Issues
 // Snake element - remains outside the stage after I fail so constant fail thereafter
 // Food randomises indefinitely and when i use draw food in the loop it does not randomise when collided with // fixed
 // Snake can go outside of the stage
 // Snake is shifting and popping regardless of wether the snake ate food or not - need to fix in the interval function// fixed
-//^ above is now causing multiple gameovers making it difficult to restart // Fixed declaring the loop in a variable and putting it in gameOver function 
+//^ above is now causing multiple gameovers making it difficult to restart // Fixed declaring the loop in a variable and putting it in gameOver function
 
 // To do after fixing bugs
 // add self collision with longer snake body
