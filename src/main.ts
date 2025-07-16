@@ -143,7 +143,7 @@ function updateScore() {
 // Add collision with walls and the snake array
 function checkWallCollision() {
     const head = snake[0];
-  
+
     if (
         head.x < 0 ||
         head.x >= GRID_WIDTH ||
