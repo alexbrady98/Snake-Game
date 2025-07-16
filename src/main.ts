@@ -1,5 +1,9 @@
 import "./style.scss";
 
+export const GRID_WIDTH = 30;
+export const GRID_HEIGHT = 30;
+export const CELL_SIZE = 20;
+
 // Firstly I should set up a grid system that will allow tracking off the snake and the food item
 // Define the initial state of each item and the direction
 type Position = { x: number; y: number };
@@ -74,6 +78,7 @@ function moveSnake() {
     head.x += direction.x;
     // adds the direction to the head of the snake
     head.y += direction.y;
+
     snake.unshift(head);
     // adding the new head to the front of the snake array
     return head;
@@ -121,8 +126,8 @@ function checkSelfCollision() {
 // Math.ceil? and Math.floor.
 // Math.floor is randomising a decimal between 0 - 1 * by width & height then round it down to a full number
 function randomiseFood() {
-    const gridWidth = 30;
-    const gridHeight = 35;
+    const gridWidth = 29;
+    const gridHeight = 31.5;
 
     food = {
         x: Math.floor(Math.random() * gridWidth),
@@ -139,8 +144,8 @@ function updateScore() {
 // Add collision with walls and the snake array
 function checkWallCollision() {
     const head = snake[0];
-    const gridWidth = 30;
-    const gridHeight = 35;
+    const gridWidth = 29;
+    const gridHeight = 31.5;
 
     if (
         head.x < 0 ||
@@ -157,7 +162,7 @@ function gameOver() {
     alert("Game Over! Your score was " + score);
     clearInterval(gameLoop);
     const playAgain = confirm("Play Again?");
-    if(playAgain) location.reload()
+    if (playAgain) location.reload();
 }
 
 // Add a game over state and reset the game
@@ -203,7 +208,7 @@ const gameLoop = setInterval(() => {
 }, 100);
 
 // Issues
-// Snake element - remains outside the stage after I fail so constant fail thereafter// fixed 
+// Snake element - remains outside the stage after I fail so constant fail thereafter// fixed
 // Food randomises indefinitely and when i use draw food in the loop it does not randomise when collided with // fixed
 // Snake can go outside of the stage
 // Snake is shifting and popping regardless of wether the snake ate food or not - need to fix in the interval function// fixed
