@@ -84,8 +84,19 @@ function moveSnake() {
     // return the new head so we can decide whether to pop the tail later
 }
 
+// Get CSS variable-based cell size so we can adjust dynamically
+function getCellSize(): number {
+    return parseFloat(
+        getComputedStyle(document.documentElement).getPropertyValue(
+            "--cell-size"
+        )
+    );
+}
+
 // Fixed draw snake function without pop and push as it was causeing issues in the loop
 function drawSnake() {
+    const cellSize = getCellSize();
+
     // First, remove any previously drawn snake segments
     document.querySelectorAll(".snake-segment").forEach((seg) => seg.remove());
 
@@ -98,17 +109,18 @@ function drawSnake() {
         // After removing previous element i'm adding a new element to snake segment
         segmentEl.classList.add("snake-segment");
         // Below is where its getting moved
-        segmentEl.style.left = `${segment.x * 10}px`;
-        segmentEl.style.top = `${segment.y * 10}px`;
+        segmentEl.style.left = `${segment.x * cellSize}px`;
+        segmentEl.style.top = `${segment.y * cellSize}px`;
         // Adding the div to the stage making it actually appear
         stageElement.appendChild(segmentEl);
     });
 }
 
 function drawFood() {
+    const cellSize = getCellSize();
     // x and y gives the coordinates of the food
-    foodElement.style.left = `${food.x * 10}px`;
-    foodElement.style.top = `${food.y * 10}px`;
+    foodElement.style.left = `${food.x * cellSize}px`;
+    foodElement.style.top = `${food.y * cellSize}px`;
 }
 
 /// Adding food collision
@@ -143,7 +155,7 @@ function updateScore() {
 // Add collision with walls and the snake array
 function checkWallCollision() {
     const head = snake[0];
-  
+
     if (
         head.x < 0 ||
         head.x >= GRID_WIDTH ||
@@ -209,14 +221,12 @@ const gameLoop = setInterval(() => {
 // Food randomises indefinitely and when i use draw food in the loop it does not randomise when collided with // fixed
 // Snake can go outside of the stage // partially fixed it, bottom wall is having issues even when i change device sizes - it varies between mobile and desktop versions
 
-
-
 // Snake is shifting and popping regardless of wether the snake ate food or not - need to fix in the interval function// fixed
-//^ above is now causing multiple gameovers making it difficult to restart // Fixed 
+//^ above is now causing multiple gameovers making it difficult to restart // Fixed
 
 // To do after fixing bugs
-// add self collision with longer snake body// tick 
+// add self collision with longer snake body// tick
 
 // add a game over screen
 //
-// Optional - add harder levels if I have time// won't have enough time 
+// Optional - add harder levels if I have time// won't have enough time

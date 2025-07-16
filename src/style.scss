@@ -1,147 +1,98 @@
 $background-color: #4455b6;
 
-* {
+:root {
+    --cell-size: 20px;
+}
+
+body {
     margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html,body {
-    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: white;
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    background-color: #111;
-    color: #fff;
-    font-family: sans-serif;
-    text-align: center;
-}
-
-header {
-    margin-bottom: 20px;
-
-    h1 {
-        font-size: 2rem;
-        margin-bottom: 0.5rem;
-    }
-
-    p {
-        font-size: 1rem;
-        max-width: 400px;
-    }
+    align-items: center;
+    height: 100vh;
 }
 
 .main--container {
-    width: 90vw;
-    max-width: 380px;
-    height: 480px;
-    background-color: $background-color;
-    border: 5px solid #000;
-    border-radius: 15px;
     display: flex;
-    box-sizing: border-box;
     flex-direction: column;
-    justify-content: space-around;
     align-items: center;
 
     &__stage {
-        width: 300px;
-        height: 350px;
-        border: 5px solid #000;
-        aspect-ratio: 1 / 1;
-        border-radius: 5px;
-        background-color: $background-color;
         position: relative;
-        overflow: hidden;
-
-        .main--container__stage-food {
-            width: 10px;
-            height: 10px;
-            background-color: green;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
+        width: calc(var(--cell-size) * 29);
+        height: calc(var(--cell-size) * 34);
+        background-color: #222;
+        border: 2px solid #fff;
+        margin-bottom: 1rem;
+        box-sizing: content-box;
     }
 
-    .main--container__score {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 300px;
-        padding: 10px;
-        border: 5px solid #000;
+    &__stage-food {
+        width: var(--cell-size);
+        height: var(--cell-size);
+        background-color: red;
+        position: absolute;
+        border-radius: 50%;
+    }
 
-        &-label {
-            font-size: 1rem;
-
-            span {
-                font-weight: bold;
-                margin-left: 5px;
-            }
-        }
+    &__score-label {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
     }
 
     .snake-segment {
-        width: 10px;
-        height: 10px;
-        background-color: rgb(184, 25, 25);
+        width: var(--cell-size);
+        height: var(--cell-size);
+        background-color: limegreen;
         position: absolute;
-        border: 1px solid red;
-        border-radius: 15px;
-        box-sizing: border-box;
+        border-radius: 4px;
     }
 
-    .main--container__controls {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 5px;
+    .controls {
+        display: grid;
+        grid-template-columns: repeat(3, 50px);
+        grid-template-rows: repeat(2, 50px);
+        gap: 10px;
 
         .btn {
-            width: 35px;
-            height: 35px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            background-color: #222;
-            color: #fff;
-            border: 2px solid #fff;
-            border-radius: 5px;
+            width: 50px;
+            height: 50px;
+            background-color: #444;
+            color: white;
+            border: none;
+            font-size: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 4px;
             cursor: pointer;
 
             &:hover {
-                background-color: #444;
-            }
-
-            &:active {
-                background-color: #888;
+                background-color: #666;
             }
         }
+
+        .btn--up {
+            grid-column: 2;
+            grid-row: 1;
+        }
+
+        .btn--left {
+            grid-column: 1;
+            grid-row: 2;
+        }
+
+        .btn--down {
+            grid-column: 2;
+            grid-row: 2;
+        }
+
+        .btn--right {
+            grid-column: 3;
+            grid-row: 2;
+        }
     }
-}
-
-// Media Queries 
-
-@media (max-width: 500px) {
-  .main--container {
-    max-width: 95vw;
-    height: auto;
-    padding: 10px;
-  }
-
-  .main--container__controls .btn {
-    width: 45px;
-    height: 45px;
-    font-size: 1.5rem;
-  }
-
-  .main--container__score {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .main--container__score-label {
-    font-size: 1.2rem;
-  }
 }
