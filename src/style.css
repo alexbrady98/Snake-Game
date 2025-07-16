@@ -104,3 +104,23 @@ header p {
 .main--container .main--container__controls .btn:active {
   background-color: #888;
 }
+
+@media (max-width: 500px) {
+  .main--container {
+    max-width: 95vw;
+    height: auto;
+    padding: 10px;
+  }
+  .main--container__controls .btn {
+    width: 45px;
+    height: 45px;
+    font-size: 1.5rem;
+  }
+  .main--container__score {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .main--container__score-label {
+    font-size: 1.2rem;
+  }
+}

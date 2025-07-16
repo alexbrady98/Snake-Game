@@ -193,7 +193,7 @@ const gameLoop = setInterval(() => {
 }, 100);
 
 // Issues
-// Snake element - remains outside the stage after I fail so constant fail thereafter
+// Snake element - remains outside the stage after I fail so constant fail thereafter// fixed 
 // Food randomises indefinitely and when i use draw food in the loop it does not randomise when collided with // fixed
 // Snake can go outside of the stage
 // Snake is shifting and popping regardless of wether the snake ate food or not - need to fix in the interval function// fixed
