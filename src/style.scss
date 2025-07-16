@@ -1,12 +1,12 @@
 $background-color: #4455b6;
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-html,body {
+html,
+body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -89,7 +89,7 @@ header {
         position: absolute;
         border: 1px solid red;
         border-radius: 15px;
-        box-sizing: border-box
+        box-sizing: border-box;
     }
 
     .main--container__controls {
@@ -120,27 +120,27 @@ header {
     }
 }
 
-// Media Queries 
+// Media Queries
 
 @media (max-width: 500px) {
-  .main--container {
-    max-width: 95vw;
-    height: auto;
-    padding: 10px;
-  }
+    .main--container {
+        max-width: 95vw;
+        height: auto;
+        padding: 10px;
+    }
 
-  .main--container__controls .btn {
-    width: 45px;
-    height: 45px;
-    font-size: 1.5rem;
-  }
+    .main--container__controls .btn {
+        width: 45px;
+        height: 45px;
+        font-size: 1.5rem;
+    }
 
-  .main--container__score {
-    flex-direction: column;
-    gap: 10px;
-  }
+    .main--container__score {
+        flex-direction: column;
+        gap: 10px;
+    }
 
-  .main--container__score-label {
-    font-size: 1.2rem;
-  }
+    .main--container__score-label {
+        font-size: 1.2rem;
+    }
 }
