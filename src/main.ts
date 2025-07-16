@@ -111,6 +111,11 @@ function drawFood() {
 function checkFoodCollision(newHead: Position): boolean {
     return newHead.x === food.x && newHead.y === food.y;
 }
+//adding self collision
+function checkSelfCollision() {
+    const [head, ...body] = snake;
+    return body.some((segment) => segment.x === head.x && segment.y === head.y);
+}
 
 // Now I need to randomise the food after its eaten and add a new segment to the snake array
 // Math.ceil? and Math.floor.
@@ -166,6 +171,11 @@ const gameLoop = setInterval(() => {
     checkWallCollision();
     // Check if the snake has collided with the wall boundaries
 
+    // Adding snake collision game over
+    if (checkSelfCollision()) {
+        gameOver();
+        return;
+    }
     const ateFood = checkFoodCollision(newHead);
     // Check if the new head position overlaps with the food position
 
