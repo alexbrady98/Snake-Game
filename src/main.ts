@@ -1,8 +1,6 @@
 import "./style.scss";
 
-export const GRID_WIDTH = 30;
-export const GRID_HEIGHT = 30;
-export const CELL_SIZE = 20;
+
 
 // Firstly I should set up a grid system that will allow tracking off the snake and the food item
 // Define the initial state of each item and the direction
@@ -145,7 +143,7 @@ function updateScore() {
 function checkWallCollision() {
     const head = snake[0];
     const gridWidth = 29;
-    const gridHeight = 31.5;
+    const gridHeight = 33;
 
     if (
         head.x < 0 ||
