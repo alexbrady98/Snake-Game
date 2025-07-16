@@ -1,4 +1,4 @@
-import "./style.css";
+import "./style.scss";
 
 // Firstly I should set up a grid system that will allow tracking off the snake and the food item
 // Define the initial state of each item and the direction
