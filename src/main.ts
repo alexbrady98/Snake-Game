@@ -207,12 +207,16 @@ const gameLoop = setInterval(() => {
 // Issues
 // Snake element - remains outside the stage after I fail so constant fail thereafter// fixed
 // Food randomises indefinitely and when i use draw food in the loop it does not randomise when collided with // fixed
-// Snake can go outside of the stage
+// Snake can go outside of the stage // partially fixed it, bottom wall is having issues even when i change device sizes - it varies between mobile and desktop versions
+
+
+
 // Snake is shifting and popping regardless of wether the snake ate food or not - need to fix in the interval function// fixed
-//^ above is now causing multiple gameovers making it difficult to restart // Fixed declaring the loop in a variable and putting it in gameOver function
+//^ above is now causing multiple gameovers making it difficult to restart // Fixed 
 
 // To do after fixing bugs
-// add self collision with longer snake body
+// add self collision with longer snake body// tick 
+
 // add a game over screen
 //
-// Optional - add harder levels if I have time
+// Optional - add harder levels if I have time// won't have enough time 
