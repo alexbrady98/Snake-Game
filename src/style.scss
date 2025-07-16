@@ -33,8 +33,8 @@ header {
 }
 
 .main--container {
-    width: 90vw;
-    max-width: 380px;
+    width: 95vw;
+    max-width: none;
     height: 480px;
     background-color: $background-color;
     border: 5px solid #000;
@@ -46,7 +46,7 @@ header {
     align-items: center;
 
     &__stage {
-        width: 300px;
+        width: 90vw;
         height: 350px;
         border: 5px solid #000;
         border-radius: 5px;
@@ -119,27 +119,27 @@ header {
     }
 }
 
-// Media Queries
+// Media Queries 
 
 @media (max-width: 500px) {
-    .main--container {
-        max-width: 95vw;
-        height: auto;
-        padding: 10px;
-    }
+  .main--container {
+    max-width: 95vw;
+    height: auto;
+    padding: 10px;
+  }
 
-    .main--container__controls .btn {
-        width: 45px;
-        height: 45px;
-        font-size: 1.5rem;
-    }
+  .main--container__controls .btn {
+    width: 45px;
+    height: 45px;
+    font-size: 1.5rem;
+  }
 
-    .main--container__score {
-        flex-direction: column;
-        gap: 10px;
-    }
+  .main--container__score {
+    flex-direction: column;
+    gap: 10px;
+  }
 
-    .main--container__score-label {
-        font-size: 1.2rem;
-    }
+  .main--container__score-label {
+    font-size: 1.2rem;
+  }
 }
