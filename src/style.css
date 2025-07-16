@@ -1,85 +1,127 @@
-:root {
-  --cell-size: 20px;
-}
-
-body {
+* {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #121212;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.main--container {
+html, body {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  background-color: #111;
+  color: #fff;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+header {
+  margin-bottom: 20px;
+}
+header h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+header p {
+  font-size: 1rem;
+  max-width: 400px;
+}
+
+.main--container {
+  width: 90vw;
+  max-width: 380px;
+  height: 480px;
+  background-color: #4455b6;
+  border: 5px solid #000;
+  border-radius: 15px;
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }
 .main--container__stage {
+  width: 300px;
+  height: 350px;
+  border: 5px solid #000;
+  border-radius: 5px;
+  background-color: #4455b6;
   position: relative;
-  width: calc(var(--cell-size) * 29);
-  height: calc(var(--cell-size) * 34);
-  background-color: #222;
-  border: 2px solid #fff;
-  margin-bottom: 1rem;
-  box-sizing: content-box;
+  overflow: hidden;
 }
-.main--container__stage-food {
-  width: var(--cell-size);
-  height: var(--cell-size);
-  background-color: red;
+.main--container__stage .main--container__stage-food {
+  width: 10px;
+  height: 10px;
+  background-color: green;
   position: absolute;
-  border-radius: 50%;
+  top: 0;
+  left: 0;
 }
-.main--container__score-label {
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
+.main--container .main--container__score {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 300px;
+  padding: 10px;
+  border: 5px solid #000;
+}
+.main--container .main--container__score-label {
+  font-size: 1rem;
+}
+.main--container .main--container__score-label span {
+  font-weight: bold;
+  margin-left: 5px;
 }
 .main--container .snake-segment {
-  width: var(--cell-size);
-  height: var(--cell-size);
-  background-color: limegreen;
+  width: 10px;
+  height: 10px;
+  background-color: rgb(184, 25, 25);
   position: absolute;
-  border-radius: 4px;
+  border: 1px solid red;
+  border-radius: 15px;
+  box-sizing: border-box;
 }
-.main--container .controls {
-  display: grid;
-  grid-template-columns: repeat(3, 50px);
-  grid-template-rows: repeat(2, 50px);
-  gap: 10px;
-}
-.main--container .controls .btn {
-  width: 50px;
-  height: 50px;
-  background-color: #444;
-  color: white;
-  border: none;
-  font-size: 1.5rem;
+.main--container .main--container__controls {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  border-radius: 4px;
+  gap: 5px;
+}
+.main--container .main--container__controls .btn {
+  width: 35px;
+  height: 35px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  background-color: #222;
+  color: #fff;
+  border: 2px solid #fff;
+  border-radius: 5px;
   cursor: pointer;
 }
-.main--container .controls .btn:hover {
-  background-color: #666;
+.main--container .main--container__controls .btn:hover {
+  background-color: #444;
 }
-.main--container .controls .btn--up {
-  grid-column: 2;
-  grid-row: 1;
+.main--container .main--container__controls .btn:active {
+  background-color: #888;
 }
-.main--container .controls .btn--left {
-  grid-column: 1;
-  grid-row: 2;
-}
-.main--container .controls .btn--down {
-  grid-column: 2;
-  grid-row: 2;
-}
-.main--container .controls .btn--right {
-  grid-column: 3;
-  grid-row: 2;
+
+@media (max-width: 500px) {
+  .main--container {
+    max-width: 95vw;
+    height: auto;
+    padding: 10px;
+  }
+  .main--container__controls .btn {
+    width: 45px;
+    height: 45px;
+    font-size: 1.5rem;
+  }
+  .main--container__score {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .main--container__score-label {
+    font-size: 1.2rem;
+  }
 }
